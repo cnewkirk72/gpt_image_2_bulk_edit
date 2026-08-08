@@ -180,8 +180,12 @@ export function toActionableError(err: unknown): string {
     if (status === 401) return "OpenAI rejected the API key (401). Rotate/verify OPENAI_API_KEY on the server.";
     if (status === 403)
       return "OpenAI returned 403 — gpt-image-2 may require Organization Verification on your OpenAI org. Check the OpenAI dashboard.";
-    if (status === 429)
-      return "OpenAI rate limit hit (429 — images-per-minute cap). Reduce bulk size or wait ~60s and retry.";
+    if (status === 429) {
+      if (err.code === "insufficient_quota") {
+        return "OpenAI says the account is out of credits (429 insufficient_quota). Add billing credit on platform.openai.com, then retry.";
+      }
+      return `OpenAI rate limit hit (429 ${err.code ?? ""}): ${err.message}. Reduce bulk size or wait ~60s and retry.`;
+    }
     if (status === 400) return `OpenAI rejected the request (400): ${err.message}`;
     return `OpenAI API error (${status ?? "network"}): ${err.message}`;
   }
