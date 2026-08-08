@@ -1,0 +1,28 @@
+{
+  "name": "gpt-image-2-mcp-server",
+  "version": "1.1.0",
+  "description": "Remote MCP server exposing OpenAI gpt-image-2 for bulk image editing (built for Claude Cowork custom connectors)",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@vercel/blob": "^1.0.0",
+    "express": "^4.21.0",
+    "openai": "^5.0.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}
